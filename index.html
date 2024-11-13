@@ -2,59 +2,11 @@
 	<head>
 		<link rel="stylesheet" href="styles.css">
 		<link rel="icon" href="favicon.ico"/>
+		<script src="ScriptBuilder.js"></script>
 	</head>
 	<title>Erik Ostlind</title>
 	<body onload="handleClick('fish')">
-		<script type="application/javascript">
-			waitForElementToDisplay("iframe",function(){
-				console.log("found");
-				var iframe = document.getElementsByTagName("iframe")[0];
-				iframe.onload = function(){
-					console.log('loaded');
-					var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-					innerDoc.getElementsByClassName("scratchpad-wrap-outer")[0].children[0].css("max-width", "none !IMPORTANT");
-				}
-			},100,5000);
-
-			function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeoutInMs) {
-			  var startTimeInMs = Date.now();
-			  (function loopSearch() {
-				if (document.querySelector(selector) != null) {
-				  callback();
-				  return;
-				}
-				else {
-				  setTimeout(function () {
-					if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs)
-					  return;
-					loopSearch();
-				  }, checkFrequencyInMs);
-				}
-			  })();
-			}
-
-			function getScriptContent(url) {
-				return`(function(){const scriptURL="${url}";const Embed=(window.ScratchpadEmbed=function(props){this.props={...baseProps,...props,};this.id=this.id||new Date().getTime()+"-"+Math.random();this.callbacks=[];if(props.url){this.url=props.url}
-						const self=this;this.onrun(function(data){if(data.embedReady){self.onready()}});if(this.props.onrun){this.onrun(this.props.onrun)}});Embed.prototype={url:scriptURL.replace("embed.js","embedded"),setOptions:function(options){this.props={...this.props,...options,};this.postFrame(this.props)},clear:function(){this.setOptions({code:""})},onrun:function(callback){this.bindListener();this.callbacks.push(callback)},onready:function(){const props=this.props;if(props.code!==undefined){this.setOptions({code:props.code,autoFocus:props.autoFocus,lines:props.lines,cursor:props.cursor,validate:props.validate,})}
-						if(this.onload){this.onload()}
-						if(props.onload){props.onload()}},restart:function(code){this.postFrame({restart:!0})},bindListener:function(){if(this.bound){return}
-						const self=this;window.addEventListener("message",function(e){let data;try{data=JSON.parse(event.data)}catch(err){}
-						if(data&&data.id===self.id){self.frameSource=e.source;self.frameOrigin=e.origin;delete data.id;for(let i=0,l=self.callbacks.length;i<l;i++){self.callbacks[i](data)}}},!1,);this.bound=!0},getIframe:function(){if(this.iframe){return this.iframe}
-						const props=this.props;let toolbarHeight=66;let editorWidth=540;let canvasWidth=400;let defaultHeight=400;let borderWidth=0;let borderHeight=1;if(props.output===!1||props.editor===!1){borderWidth=2}
-						if(props.buttons===!1&&props.author===!1){toolbarHeight=0;borderHeight=2}
-						if(props.buttons===!1&&props.editor===!1){borderWidth=0;borderHeight=0;toolbarHeight=0}
-						if(props.editor===!1){editorWidth=0}
-						if(props.output===!1){canvasWidth=0}
-						if(props.width){canvasWidth=parseFloat(props.width)}
-						if(props.height){defaultHeight=parseFloat(props.height)}
-						let height=defaultHeight+toolbarHeight+borderHeight;let width=editorWidth+canvasWidth+borderWidth;height+="px";width+="px";if(props.frameWidth){width=props.frameWidth}
-						if(props.frameHeight){height=props.frameHeight}
-						const queryString={id:this.id,origin:window.location.origin,};for(const[key,origVal]of Object.entries(props)){const val=rpropMap[origVal]||props[key];if(typeof val!=="function"){queryString[key]=val}}
-						const iframe=(this.iframe=document.createElement("iframe"));iframe.src=this.url.replace(/\?.*$/,"")+"?"+this.param(queryString);iframe.style.border="0px";iframe.style.width=width;iframe.style.height=height;iframe.frameBorder=0;iframe.scrolling="no";return iframe},param:function(props){const results=[];for(const[key,val]of Object.entries(props)){results.push(encodeURIComponent(key)+"="+encodeURIComponent(val),)}
-						return results.join("&").replace(/%20/g,"+")},postFrame:function(data){if(this.frameSource){this.frameSource.postMessage(JSON.stringify(data),this.frameOrigin,)}},};const baseProps={};const origProps=new URLSearchParams(scriptURL.slice(scriptURL.indexOf("?")),);const propMap={no:!1,yes:!0};const rpropMap={false:"no",true:"yes"};for(const[key,val]of origProps){const mappedVal=propMap[val];if(mappedVal!==undefined){baseProps[key]=mappedVal}}
-						if(baseProps.embed===!0){const scripts=document.getElementsByTagName("script");const lastScript=scripts[scripts.length-1];lastScript.parentNode.insertBefore(new Embed(baseProps).getIframe(),lastScript,)}})()`
-			}			
-			
+		<script type="application/javascript">					
 			function handleClick(type) {
 				document.getElementById("script").remove();
 				var iframes = document.getElementsByTagName("IFRAME");
@@ -77,13 +29,13 @@
 					document.getElementById("fish").style.display = "block";
 					document.getElementById("bawk").style.display = "none";
 				}
-				else if(type === 'fish'){
+				else if(type === 'slide'){
 					document.getElementsByTagName("BODY")[0].style.background = "#c4f8ff";
 					var dim = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) * 1.0;
 					var width = Math.min(window.innerWidth * 0.90, 1200);
 					var height = window.innerHeight * 0.99;
 					var script = document.createElement("script")
-					var url = "https://www.khanacademy.org/computer-programming/boid-pond/5615654214647808/embed.js?editor=no&buttons=no&author=no&embed=yes&width="+width+"&height="+height;
+					var url = "https://www.khanacademy.org/computer-programming/slide/6654911938871296/embed.js?editor=no&buttons=no&author=no&embed=yes&width="+width+"&height="+height;
 					script.text = getScriptContent(url)
 					script.id = "script"
 					var canvas = document.getElementById("canvas");
@@ -146,8 +98,8 @@
 					<img src="./bawk.png" width="80px" onclick="handleClick('bawk')">
 					<span class="bawk-text">Bawk</span>
 				</div>
-				<div id="fish" class="cover" style="display: none;">
-					<img src="./fish.png" width="80px" onclick="handleClick('fish')">
+				<div id="slide" class="cover" style="display: none;">
+					<img src="./slide.png" width="80px" onclick="handleClick('slide')">
 				</div>
 			</div>		
 		</div>
