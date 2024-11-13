@@ -5,7 +5,7 @@
 		<script src="ScriptBuilder.js"></script>
 	</head>
 	<title>Erik Ostlind</title>
-	<body onload="handleClick('fish')">
+	<body onload="handleClick('slide')">
 		<script type="application/javascript">					
 			function handleClick(type) {
 				document.getElementById("script").remove();
@@ -26,7 +26,7 @@
 					canvas.style.width = "600px";
 					canvas.style.height = "600px";
 					document.getElementById("dropdown").style.display = "block";
-					document.getElementById("fish").style.display = "block";
+					document.getElementById("slide").style.display = "block";
 					document.getElementById("bawk").style.display = "none";
 				}
 				else if(type === 'slide'){
@@ -46,7 +46,7 @@
 					canvas.style.height = height+"px";
 					document.getElementById("dropdown").style.display = "none";
 					document.getElementById("bawk").style.display = "block";
-					document.getElementById("fish").style.display = "none";
+					document.getElementById("slide").style.display = "none";
 				}
 			}
 		</script>
