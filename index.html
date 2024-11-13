@@ -34,7 +34,7 @@
 			}
 
 			function getScriptContent(url) {
-				return`(function(){const scriptURL=${url};const Embed=(window.ScratchpadEmbed=function(props){this.props={...baseProps,...props,};this.id=this.id||new Date().getTime()+"-"+Math.random();this.callbacks=[];if(props.url){this.url=props.url}
+				return`(function(){const scriptURL="${url}";const Embed=(window.ScratchpadEmbed=function(props){this.props={...baseProps,...props,};this.id=this.id||new Date().getTime()+"-"+Math.random();this.callbacks=[];if(props.url){this.url=props.url}
 						const self=this;this.onrun(function(data){if(data.embedReady){self.onready()}});if(this.props.onrun){this.onrun(this.props.onrun)}});Embed.prototype={url:scriptURL.replace("embed.js","embedded"),setOptions:function(options){this.props={...this.props,...options,};this.postFrame(this.props)},clear:function(){this.setOptions({code:""})},onrun:function(callback){this.bindListener();this.callbacks.push(callback)},onready:function(){const props=this.props;if(props.code!==undefined){this.setOptions({code:props.code,autoFocus:props.autoFocus,lines:props.lines,cursor:props.cursor,validate:props.validate,})}
 						if(this.onload){this.onload()}
 						if(props.onload){props.onload()}},restart:function(code){this.postFrame({restart:!0})},bindListener:function(){if(this.bound){return}
