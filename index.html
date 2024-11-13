@@ -32,7 +32,10 @@
 				}
 			  })();
 			}
-			
+
+			function getScriptContent(url) {
+				return`!function(){const t=${url},e=window.ScratchpadEmbed=function(t){this.props={...o,...t},this.id=this.id||(new Date).getTime()+"-"+Math.random(),this.callbacks=[],t.url&&(this.url=t.url);const e=this;this.onrun((function(t){t.embedReady&&e.onready()})),this.props.onrun&&this.onrun(this.props.onrun)};e.prototype={url:t.replace("embed.js","embedded"),setOptions:function(t){this.props={...this.props,...t},this.postFrame(this.props)},clear:function(){this.setOptions({code:""})},onrun:function(t){this.bindListener(),this.callbacks.push(t)},onready:function(){const t=this.props;void 0!==t.code&&this.setOptions({code:t.code,autoFocus:t.autoFocus,lines:t.lines,cursor:t.cursor,validate:t.validate}),this.onload&&this.onload(),t.onload&&t.onload()},restart:function(t){this.postFrame({restart:!0})},bindListener:function(){if(this.bound)return;const t=this;window.addEventListener("message",(function(e){let o;try{o=JSON.parse(event.data)}catch(t){}if(o&&o.id===t.id){t.frameSource=e.source,t.frameOrigin=e.origin,delete o.id;for(let e=0,i=t.callbacks.length;e<i;e++)t.callbacks[e](o)}}),!1),this.bound=!0},getIframe:function(){if(this.iframe)return this.iframe;const t=this.props;let e=66,o=540,i=400,n=400,r=0,a=1;!1!==t.output&&!1!==t.editor||(r=2),!1===t.buttons&&!1===t.author&&(e=0,a=2),!1===t.buttons&&!1===t.editor&&(r=0,a=0,e=0),!1===t.editor&&(o=0),!1===t.output&&(i=0),t.width&&(i=parseFloat(t.width)),t.height&&(n=parseFloat(t.height));let c=n+e+a,d=o+i+r;c+="px",d+="px",t.frameWidth&&(d=t.frameWidth),t.frameHeight&&(c=t.frameHeight);const h={id:this.id,origin:window.location.origin};for(const[e,o]of Object.entries(t)){const i=s[o]||t[e];"function"!=typeof i&&(h[e]=i)}const u=this.iframe=document.createElement("iframe");return u.src=this.url.replace(/\?.*$/,"")+"?"+this.param(h),u.style.border="0px",u.style.width=d,u.style.height=c,u.frameBorder=0,u.scrolling="no",u},param:function(t){const e=[];for(const[o,i]of Object.entries(t))e.push(encodeURIComponent(o)+"="+encodeURIComponent(i));return e.join("&").replace(/%20/g,"+")},postFrame:function(t){this.frameSource&&this.frameSource.postMessage(JSON.stringify(t),this.frameOrigin)}};const o={},i=new URLSearchParams(t.slice(t.indexOf("?"))),n={no:!1,yes:!0},s={false:"no",true:"yes"};for(const[t,e]of i){const i=n[e];void 0!==i&&(o[t]=i)}if(!0===o.embed){const t=document.getElementsByTagName("script"),i=t[t.length-1];i.parentNode.insertBefore(new e(o).getIframe(),i)}}();`
+			}			
 			
 			function handleClick(type) {
 				document.getElementById("script").remove();
@@ -43,7 +46,8 @@
 				if(type === 'bawk'){
 					document.getElementsByTagName("BODY")[0].style.background = "linear-gradient(180deg, #777676, #000)";
 					var script = document.createElement("script")
-					script.src = "https://www.khanacademy.org/computer-programming/asteroidsphysics/6183045552947200/embed.js?editor=no&buttons=no&author=no&embed=yes&width=600&height=600";
+					var url = "https://www.khanacademy.org/computer-programming/asteroidsphysics/6183045552947200/embed.js?editor=no&buttons=no&author=no&embed=yes&width=600&height=600";
+					script.text = getScriptContent(url)
 					script.id = "script"
 					var canvas = document.getElementById("canvas");
 					canvas.append(script);
@@ -61,7 +65,8 @@
 					var width = Math.min(window.innerWidth * 0.90, 1200);
 					var height = window.innerHeight * 0.99;
 					var script = document.createElement("script")
-					script.src = "https://www.khanacademy.org/computer-programming/boid-pond/5615654214647808/embed.js?editor=no&buttons=no&author=no&embed=yes&width="+width+"&height="+height;
+					var url = "https://www.khanacademy.org/computer-programming/boid-pond/5615654214647808/embed.js?editor=no&buttons=no&author=no&embed=yes&width="+width+"&height="+height;
+					script.text = getScriptContent(url)
 					script.id = "script"
 					var canvas = document.getElementById("canvas");
 					canvas.append(script);
